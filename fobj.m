@@ -1,22 +1,10 @@
 function esm=fobj(P)
 %Funci�n para calcular el �ndice de desempe�o
-%% Use labeled images for testing
-imgFolder = 'img';
-imds = imageDatastore(imgFolder,...
-    'IncludeSubFolders', true, 'LabelSource', 'foldernames');
-
-% divede 60% for training, 20% validation and 20% testing
-fracTrainFiles = 0.6;
-fracValFiles = 0.2;
-fracTestFiles = 0.2;
-
-[imdsTrain, imdsValidation, imdsTest] = splitEachLabel(imds, ...
-    fracTrainFiles, fracValFiles, fracTestFiles, 'randomize')
 
 
 %Sistema difuso como variable global
 global a
-
+global imdsTrain imdsValidation imdsTest
 %Controlador difuso
 a = generafis(P);
 
@@ -44,7 +32,10 @@ for i=1:numel(imdsTrain.Files)
     end
     output_fis(:, 2) = floor(output_fis(:,1));
     numero_rayos = sum(output_fis(:,2));
-    resultVector = [double(imdsTrain.Labels(i)), numero_rayos];
+    if(numero_rayos>2)
+        numero_rayos = 2;
+    end
+    resultVector = [str2num(char(imdsTrain.Labels(i))), numero_rayos];
     comparationMatrix = [comparationMatrix; resultVector];
 end
 %% get results
@@ -54,5 +45,5 @@ YTest = comparationMatrix(:,2);
 e = sum(YPred == YTest)/total
 
 %�ndice de desempe�o
-esm = 1/length(e)*sum(e.^2);
-
+%esm = 1/length(e)*sum(e.^2);
+esm = e;

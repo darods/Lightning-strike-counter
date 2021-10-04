@@ -15,7 +15,7 @@ clc
 warning('off')
 %Fuzzy logic system call
 sistema=sisdifuso;
-fuzzy(sistema)
+%fuzzy(sistema)
 
 
 %% Use labeled images for testing
@@ -52,7 +52,10 @@ for i=1:numel(imdsTrain.Files)
     end
     output_fis(:, 2) = floor(output_fis(:,1));
     numero_rayos = sum(output_fis(:,2));
-    resultVector = [double(imdsTrain.Labels(i)), numero_rayos];
+    if(numero_rayos>2)
+        numero_rayos = 2;
+    end
+    resultVector = [str2num(char(imdsTrain.Labels(i))), numero_rayos];
     comparationMatrix = [comparationMatrix; resultVector];
 end
 %% get results
@@ -61,7 +64,8 @@ YPred = comparationMatrix(:,1);
 YTest = comparationMatrix(:,2);
 accuracy = sum(YPred == YTest)/total
 
-%% (Optional) show wrong predicted images
+%{ 
+(Optional) show wrong predicted images
 ind = find(YPred ~= YTest);
 figure; 
 for ii = 1:length(ind)
@@ -70,3 +74,4 @@ for ii = 1:length(ind)
     title([num2str(double(YPred(ind(ii)))-1), ' predicted, ', ... 
         num2str(double(YTest(ind(ii)))-1), ' actual'])
 end
+%}

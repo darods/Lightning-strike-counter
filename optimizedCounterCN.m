@@ -10,11 +10,37 @@ global a
 
 %Par�metros iniciales del sistema de inferencia
 %X0=[0.2 -0.5 0.2 0 0.2 0.5 0.2 -0.5 0.2 0 0.2 0.5]; 8
-X0=[21.6 3.75 21.6 36.25 21.6 83.75 21.6 116.3 21.58 183.8 21.58 216.2 -1.64e+04 -6130 2800 4915 ];
+X0=[3.05 3.16 0.571 ...
+    4.91 3.84 9.833 ...
+    19.3 2.5 36.9 ...
+    91.5 3.16 38.6 ...
+    230 3.84 430 ...
+    362 2.5 1.2e+03 ...
+    0.55 3.28 0.334 ...
+    0.164 4.1 1.008 ...
+    0.193 1 0.2808 ...
+    0.193 1 0.9624 ...
+    0.193 1 2.02 ...  
+    ];
+%% Use labeled images for testing
+imgFolder = 'img';
+imds = imageDatastore(imgFolder,...
+    'IncludeSubFolders', true, 'LabelSource', 'foldernames');
 
-%Sistema difuso sin optimizar
+% divede 60% for training, 20% validation and 20% testing
+fracTrainFiles = 0.6;
+fracValFiles = 0.2;
+fracTestFiles = 0.2;
+
+global imdsTrain imdsValidation imdsTest
+
+[imdsTrain, imdsValidation, imdsTest] = splitEachLabel(imds, ...
+    fracTrainFiles, fracValFiles, fracTestFiles, 'randomize')
+
+
+%% Sistema difuso sin optimizar
 a = generafis(X0);
-
+fuzzy(a);
 %Simulaci�n del sistema de control sin optimizar
 %[t,x,e] = sim('SistemaControlPR16');
 %ys = x(:,2);
@@ -25,8 +51,40 @@ a = generafis(X0);
 options = optimset('Display','iter','MaxIter', 2);
 X = fminunc(@fobj,X0,options)
 
-%Simulaci�n del sistema de control optimizado
+%% Simulaci�n del sistema de control optimizado
 a = generafis(X);
-[t,x,e] = sim('SistemaControlPR16');
-ys = x(:,2);
-plot(t,ys);
+fuzzy(a)
+
+%% comprobación resultados sistema optimizado
+comparationMatrix = [];
+
+% Get statistical data from training data
+for i=1:numel(imdsTrain.Files)
+    imgOpenned = readimage(imdsTrain,i);
+    Iregion = regionprops(imgOpenned, 'centroid');
+    [labeled,numObjects] = bwlabel(imgOpenned,4);
+    stats = regionprops(labeled,'Eccentricity','Area','BoundingBox');
+    areas = [stats.Area];
+    eccentricities = [stats.Eccentricity];
+
+% Count Lightning strikes ing images
+    
+    output_fis = zeros (numObjects, 2);
+    for j = 1:numObjects
+        cuadro = [numObjects stats(j).Area stats(j).Eccentricity];
+        Y = evalfis(cuadro, a);
+        output_fis(j) = Y;
+    end
+    output_fis(:, 2) = floor(output_fis(:,1));
+    numero_rayos = sum(output_fis(:,2));
+    if(numero_rayos>2)
+        numero_rayos = 2;
+    end
+    resultVector = [str2num(char(imdsTrain.Labels(i))), numero_rayos];
+    comparationMatrix = [comparationMatrix; resultVector];
+end
+%% get results
+total = numel(comparationMatrix(:,1));
+YPred = comparationMatrix(:,1);
+YTest = comparationMatrix(:,2);
+accuracy = sum(YPred == YTest)/total
