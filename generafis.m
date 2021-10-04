@@ -1,6 +1,11 @@
-function sistema = generafis()
+function CdifusoPD = generafis(x)
 
 sistema=newfis('Lightning_strike_counter');
+sistema.andMethod = 'prod';
+sistema.orMethod = 'max';
+sistema.defuzzMethod = 'centroid';
+sistema.impMethod = 'prod';
+sistema.aggMethod = 'sum';
 %Variable de entrada: Número de objetos
 sistema=addvar(sistema,'input','n_objetos',[0 2]);
 
@@ -12,9 +17,9 @@ sistema=addmf(sistema,'input',1,' mas_de_100','gaussmf',[35.37 200]);
 %plotmf(sistema,'input',1)
 %}
 % Configuración 2
-sistema=addmf(sistema,'input',1,' entre_0_y_20','gauss2mf', [21.6 3.75 21.6 36.25]);
-sistema=addmf(sistema,'input',1,' entre_20_y_100','gauss2mf',[21.6 83.75 21.6 116.3]);
-sistema=addmf(sistema,'input',1,' mas_de_100','gauss2mf',[21.58 183.8 21.58 216.2]);
+sistema=addmf(sistema,'input',1,' entre_0_y_20','gbellmf', [x(1) x(2) x(3)]);
+sistema=addmf(sistema,'input',1,' entre_20_y_100','gbellmf',[x(4) x(5) x(6)]);
+sistema=addmf(sistema,'input',1,' mas_de_100','gbellmf',[x(7) x(8) x(9)]);
 
 
 %Variable de entrada: Area
@@ -27,9 +32,9 @@ sistema=addmf(sistema,'input',2,'grande','trapmf', [1.312e+04 2.977e+04 5.057e+0
 %plotmf(sistema,'input',2)
 %}
 % Configuración 2
-sistema=addmf(sistema,'input',2,'pequena','gauss2mf', [3073 -4385 3073 239.2]);
-sistema=addmf(sistema,'input',2,'media','gauss2mf', [4074 1.227e+04 4074 1.841e+04]);
-sistema=addmf(sistema,'input',2,'grande','gauss2mf', [5656 2.81e+04 42.47 5.058e+04]);
+sistema=addmf(sistema,'input',2,'pequena','gbellmf', [x(10) x(11) x(12)]);
+sistema=addmf(sistema,'input',2,'media','gbellmf', [x(13) x(14) x(15)]);
+sistema=addmf(sistema,'input',2,'grande','gbellmf', [x(16) x(17) x(18)]);
 
 %Variable de entrada: excentricidad
 sistema=addvar(sistema,'input','excentricidad',  [0 1]);
@@ -41,17 +46,17 @@ sistema=addmf(sistema,'input',3,'si_excentrico','gaussmf', [0.177 0.9746]);
 %plotmf(sistema,'input',3)
 %}
 % Configuración 2
-sistema=addmf(sistema,'input',3,'no_excentrico','gauss2mf', [0.1763 0.1283 0.1763 0.39371]);
-sistema=addmf(sistema,'input',3,'si_excentrico','gauss2mf', [0.108 0.8933 0.108 1.056]);
+sistema=addmf(sistema,'input',3,'no_excentrico','gbellmf', [x(19) x(20) x(21)]);
+sistema=addmf(sistema,'input',3,'si_excentrico','gbellmf', [x(22) x(23) x(24)]);
 
 
 %Variable de salida: Numero rayos
 sistema=addvar(sistema,'output','numero_rayos',[0 2.5]);
 
 %Funciones de pertenencia
-sistema=addmf(sistema,'output',1,'0_rayos','gbellmf', [0.6158 3.278 0.06342]);
-sistema=addmf(sistema,'output',1,'1_rayo','trimf', [0.9327 1.014 1.095]);
-sistema=addmf(sistema,'output',1,'mas_de_1_rayo','gbellmf', [0.7022 3.28 2.19]);
+sistema=addmf(sistema,'output',1,'0_rayos','gbellmf', [x(25) x(26) x(27)]);
+sistema=addmf(sistema,'output',1,'1_rayo','gbellmf', [x(28) x(29) x(30)]);
+sistema=addmf(sistema,'output',1,'mas_de_1_rayo','gbellmf', [x(31) x(32) x(33)]);
 %plotmf(sistema,'output',1)
 
 %Reglas de inferencia
@@ -70,3 +75,8 @@ ruleList=[
     3 3 2 3 1 2]; % + de 1 rayo
 
 sistema = addrule(sistema,ruleList);
+
+%Actualizando la salida de la funci�n 
+CdifusoPD=sistema;
+
+end
