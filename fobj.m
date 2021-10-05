@@ -42,8 +42,8 @@ end
 total = numel(comparationMatrix(:,1));
 YPred = comparationMatrix(:,1);
 YTest = comparationMatrix(:,2);
-e = sum(YPred == YTest)/total
-
+accuaracy = sum(YPred == YTest)/total
+e = 1-accuaracy
 %�ndice de desempe�o
 %esm = 1/length(e)*sum(e.^2);
 esm = e;

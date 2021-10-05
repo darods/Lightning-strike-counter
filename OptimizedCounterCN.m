@@ -1,4 +1,4 @@
-%Optimizaci�n de un sistema de control difuso proporcional mediante
+%Optimización de un sistema de control difuso proporcional mediante
 %cuasi-Newton
 
 close all
@@ -8,8 +8,8 @@ warning('off','all')
 %Sistema difuso como variable global
 global a
 
-%Par�metros iniciales del sistema de inferencia
-%X0=[0.2 -0.5 0.2 0 0.2 0.5 0.2 -0.5 0.2 0 0.2 0.5]; 8
+%Parámetros iniciales del sistema de inferencia
+
 X0=[3.05 3.16 0.571 ...
     4.91 3.84 9.833 ...
     19.3 2.5 36.9 ...
@@ -41,11 +41,6 @@ global imdsTrain imdsValidation imdsTest
 %% Sistema difuso sin optimizar
 a = generafis(X0);
 fuzzy(a);
-%Simulaci�n del sistema de control sin optimizar
-%[t,x,e] = sim('SistemaControlPR16');
-%ys = x(:,2);
-%plot(t,ys);
-%pause(5)
 
 %Optimizaci�n con gradiente
 options = optimset('Display','iter','MaxIter', 2);

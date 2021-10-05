@@ -6,25 +6,23 @@ Developed by:
 year: 2021
 course: Cibernetica 3
 %}
-% Adapted from Matlab tutorial
 close all
 clear all
 clc
 
-%% Fuzzy logic definition
+%% Step 1: Fuzzy logic system call
 warning('off')
-%Fuzzy logic system call
-sistema=sisdifuso;
-fuzzy(sistema)
-imgIndex = 1;
+sistema=fuzzySystemStatic; %Fuzzy logic system call
+fuzzy(sistema) % Show fuzzy logic configuration
+imgIndex = 19; % Image index that is analized by the FL system
 
 
-%% Use labeled images for testing
+%% Step 2: Prepare labeled images for testing
 imgFolder = 'img';
 imds = imageDatastore(imgFolder,...
     'IncludeSubFolders', true, 'LabelSource', 'foldernames');
 
-% divede 60% for training, 20% validation and 20% testing
+% divide 60% for training, 20% validation and 20% testing
 fracTrainFiles = 0.9;
 fracValFiles = 0.05;
 fracTestFiles = 0.05;
@@ -32,19 +30,16 @@ fracTestFiles = 0.05;
 [imdsTrain, imdsValidation, imdsTest] = splitEachLabel(imds, ...
     fracTrainFiles, fracValFiles, fracTestFiles, 'randomize');
 
-comparationMatrix = [];
-
-%% Get statistical data from training data
-
-imgOpenned = readimage(imdsTrain,24);
+%% Step 3: Get statistical data from training data
+imgOpenned = readimage(imdsTrain,imgIndex);
 Iregion = regionprops(imgOpenned, 'centroid');
 [labeled,numObjects] = bwlabel(imgOpenned,4);
 stats = regionprops(labeled,'Eccentricity','Area','BoundingBox');
 areas = [stats.Area];
 eccentricities = [stats.Eccentricity];
 
-%% Count Lightning strikes ing images
-    
+%% Step 4: Count Lightning strikes in images
+comparationMatrix = [];    
 output_fis = zeros (numObjects, 2);
 for j = 1:numObjects
     cuadro = [numObjects stats(j).Area stats(j).Eccentricity];
@@ -53,16 +48,16 @@ for j = 1:numObjects
 end
 output_fis(:, 2) = floor(output_fis(:,1));
 numero_rayos = sum(output_fis(:,2));
-resultVector = [double(imdsTrain.Labels(i)), numero_rayos];
+resultVector = [double(imdsTrain.Labels(imgIndex)), numero_rayos];
 comparationMatrix = [comparationMatrix; resultVector];
 
-%% get results
+%% Step 5: get results
 total = numel(comparationMatrix(:,1));
 YPred = comparationMatrix(:,1);
 YTest = comparationMatrix(:,2);
 accuracy = sum(YPred == YTest)/total
 
-%% (Optional) show wrong predicted images
+%% Step 6 (Optional): show wrong predicted images
 ind = find(YPred ~= YTest);
 figure; 
 for ii = 1:length(ind)
