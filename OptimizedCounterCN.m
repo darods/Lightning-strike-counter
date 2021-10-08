@@ -42,9 +42,9 @@ global imdsTrain imdsValidation imdsTest
 a = generafis(X0);
 fuzzy(a);
 
-%Optimizaci�n con gradiente
-options = optimset('Display','iter','MaxIter', 2);
-X = fminunc(@fobj,X0,options)
+%% Optimización con gradiente
+options = optimset('Display','iter','MaxIter', 10);
+X = fminunc(@fobj,X0,options);
 
 %% Simulaci�n del sistema de control optimizado
 a = generafis(X);

@@ -12,8 +12,8 @@ clc
 
 %% Step 1: Fuzzy logic system call
 warning('off')
-sistema=fuzzySystemStatic; %Fuzzy logic system call
-fuzzy(sistema) % Show fuzzy logic configuration
+%sistema=fuzzySystemStatic; %Fuzzy logic system call
+%fuzzy(sistema) % Show fuzzy logic configuration
 imgIndex = 19; % Image index that is analized by the FL system
 
 
@@ -43,7 +43,7 @@ comparationMatrix = [];
 output_fis = zeros (numObjects, 2);
 for j = 1:numObjects
     cuadro = [numObjects stats(j).Area stats(j).Eccentricity];
-    Y = evalfis(cuadro, sistema);
+    Y = evalfis(cuadro, Lightning_strike_counter_GA_optimized_2);
     output_fis(j) = Y;
 end
 output_fis(:, 2) = floor(output_fis(:,1));

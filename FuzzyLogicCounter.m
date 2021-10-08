@@ -10,30 +10,30 @@ course: Cibernetica 3
 close all
 clear all
 clc
-
-%% Fuzzy logic definition
-warning('off')
-%Fuzzy logic system call
-sistema=sisdifuso;
-%fuzzy(sistema)
-
-
 %% Use labeled images for testing
 imgFolder = 'img';
 imds = imageDatastore(imgFolder,...
     'IncludeSubFolders', true, 'LabelSource', 'foldernames');
 
 % divede 60% for training, 20% validation and 20% testing
-fracTrainFiles = 0.6;
-fracValFiles = 0.2;
-fracTestFiles = 0.2;
+fracTrainFiles = 0.9;
+fracValFiles = 0.05;
+fracTestFiles = 0.05;
 
 [imdsTrain, imdsValidation, imdsTest] = splitEachLabel(imds, ...
     fracTrainFiles, fracValFiles, fracTestFiles, 'randomize');
 
-comparationMatrix = [];
+%% Fuzzy logic definition
+warning('off')
+%Fuzzy logic system call
+%sistema=fuzzySystemStatic;
+%fuzzy(sistema)
+sistema = readfis('Lightning_strike_counter_GA_optimized_2.fis');
 
-% Get statistical data from training data
+
+
+%% Get statistical data from training data
+comparationMatrix = [];
 for i=1:numel(imdsTrain.Files)
     imgOpenned = readimage(imdsTrain,i);
     Iregion = regionprops(imgOpenned, 'centroid');
@@ -63,7 +63,8 @@ total = numel(comparationMatrix(:,1));
 YPred = comparationMatrix(:,1);
 YTest = comparationMatrix(:,2);
 accuracy = sum(YPred == YTest)/total
-
+error = 1 - accuracy 
+mse = 1/total*sum((YPred-YTest).^2)
 %{ 
 (Optional) show wrong predicted images
 ind = find(YPred ~= YTest);

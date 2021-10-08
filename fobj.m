@@ -1,4 +1,4 @@
-function esm=fobj(P)
+function error=fobj(P)
 %Funci�n para calcular el �ndice de desempe�o
 
 
@@ -42,8 +42,8 @@ end
 total = numel(comparationMatrix(:,1));
 YPred = comparationMatrix(:,1);
 YTest = comparationMatrix(:,2);
-accuaracy = sum(YPred == YTest)/total
-e = 1-accuaracy
+accuaracy = sum(YPred == YTest)/total;
+e = 1-accuaracy;
 %�ndice de desempe�o
 %esm = 1/length(e)*sum(e.^2);
-esm = e;
+error = e;
