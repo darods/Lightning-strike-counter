@@ -12,17 +12,17 @@ clc
 
 %% Step 1: Fuzzy logic system call
 warning('off')
-%sistema=fuzzySystemStatic; %Fuzzy logic system call
+sistema=fuzzySystemStatic; %Fuzzy logic system call
 %fuzzy(sistema) % Show fuzzy logic configuration
 imgIndex = 19; % Image index that is analized by the FL system
 
 
 %% Step 2: Prepare labeled images for testing
-imgFolder = 'img';
+imgFolder = 'imgBinary';
 imds = imageDatastore(imgFolder,...
     'IncludeSubFolders', true, 'LabelSource', 'foldernames');
 
-% divide 60% for training, 20% validation and 20% testing
+% split 60% for training, 20% validation and 20% testing
 fracTrainFiles = 0.9;
 fracValFiles = 0.05;
 fracTestFiles = 0.05;
@@ -35,20 +35,27 @@ imgOpenned = readimage(imdsTrain,imgIndex);
 Iregion = regionprops(imgOpenned, 'centroid');
 [labeled,numObjects] = bwlabel(imgOpenned,4);
 stats = regionprops(labeled,'Eccentricity','Area','BoundingBox');
-areas = [stats.Area];
-eccentricities = [stats.Eccentricity];
+
+% get vector of the image index
+exStruct = struct('imgIndex',imgIndex,...
+                  'Rays',double(imdsTrain.Labels(imgIndex)),...
+                  'numObj', numObjects,... 
+                  'imgStats',stats);
 
 %% Step 4: Count Lightning strikes in images
 comparationMatrix = [];    
-output_fis = zeros (numObjects, 2);
-for j = 1:numObjects
-    cuadro = [numObjects stats(j).Area stats(j).Eccentricity];
-    Y = evalfis(cuadro, Lightning_strike_counter_GA_optimized_2);
+output_fis = zeros (exStruct.numObj, 2);
+for j = 1:exStruct.numObj
+    cuadro = [exStruct.numObj ... 
+              exStruct.imgStats(j).Area ... 
+              exStruct.imgStats(j).Eccentricity];
+          
+    Y = evalfis(cuadro, sistema);
     output_fis(j) = Y;
 end
 output_fis(:, 2) = floor(output_fis(:,1));
 numero_rayos = sum(output_fis(:,2));
-resultVector = [double(imdsTrain.Labels(imgIndex)), numero_rayos];
+resultVector = [exStruct.Rays(1), numero_rayos];
 comparationMatrix = [comparationMatrix; resultVector];
 
 %% Step 5: get results

@@ -11,7 +11,7 @@ close all
 clear all
 clc
 %% Use labeled images for testing
-imgFolder = 'img';
+imgFolder = 'imgBinary';
 imds = imageDatastore(imgFolder,...
     'IncludeSubFolders', true, 'LabelSource', 'foldernames');
 
@@ -30,34 +30,29 @@ warning('off')
 %fuzzy(sistema)
 sistema = readfis('Lightning_strike_counter_GA_optimized_2.fis');
 
-
-
 %% Get statistical data from training data
-comparationMatrix = [];
-for i=1:numel(imdsTrain.Files)
-    imgOpenned = readimage(imdsTrain,i);
-    Iregion = regionprops(imgOpenned, 'centroid');
-    [labeled,numObjects] = bwlabel(imgOpenned,4);
-    stats = regionprops(labeled,'Eccentricity','Area','BoundingBox');
-    areas = [stats.Area];
-    eccentricities = [stats.Eccentricity];
+superStructure=getImagesInformation(imdsTrain);
 
 %% Count Lightning strikes ing images
-    
-    output_fis = zeros (numObjects, 2);
-    for j = 1:numObjects
-        cuadro = [numObjects stats(j).Area stats(j).Eccentricity];
+comparationMatrix = [];
+for j = 1:numel(superStructure)
+    output_fis = zeros (superStructure(j).numObj, 2);
+    for h=1:superStructure(j).numObj
+        cuadro = [superStructure(j).numObj ... 
+                  superStructure(j).imgStats(h).Area ... 
+                  superStructure(j).imgStats(h).Eccentricity];
         Y = evalfis(cuadro, sistema);
-        output_fis(j) = Y;
+        output_fis(h) = Y;
     end
     output_fis(:, 2) = floor(output_fis(:,1));
     numero_rayos = sum(output_fis(:,2));
     if(numero_rayos>2)
         numero_rayos = 2;
     end
-    resultVector = [str2num(char(imdsTrain.Labels(i))), numero_rayos];
+    resultVector = [superStructure(j).Rays, numero_rayos];
     comparationMatrix = [comparationMatrix; resultVector];
 end
+
 %% get results
 total = numel(comparationMatrix(:,1));
 YPred = comparationMatrix(:,1);
@@ -65,14 +60,3 @@ YTest = comparationMatrix(:,2);
 accuracy = sum(YPred == YTest)/total
 error = 1 - accuracy 
 mse = 1/total*sum((YPred-YTest).^2)
-%{ 
-(Optional) show wrong predicted images
-ind = find(YPred ~= YTest);
-figure; 
-for ii = 1:length(ind)
-    subplot(3,3,ii);
-    imagesc(imdsValidation.readimage(ind(ii)));
-    title([num2str(double(YPred(ind(ii)))-1), ' predicted, ', ... 
-        num2str(double(YTest(ind(ii)))-1), ' actual'])
-end
-%}

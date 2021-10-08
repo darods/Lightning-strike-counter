@@ -4,16 +4,16 @@ clear all
 warning('off','all')
 
 %Sistema difuso como variable global
-global a
+global sistema
 
 % datos de entrenamiento
 %% Use labeled images for testing
-imgFolder = 'img';
+imgFolder = 'imgBinary';
 imds = imageDatastore(imgFolder,...
     'IncludeSubFolders', true, 'LabelSource', 'foldernames');
 
 % divede 60% for training, 20% validation and 20% testing
-fracTrainFiles = 0.6;
+fracTrainFiles = 0.5;
 fracValFiles = 0.2;
 fracTestFiles = 0.2;
 
@@ -32,8 +32,8 @@ optionsga = gaoptimset('PopulationSize',50,'Generations',10,'PopInitRange',...
 X = ga(@fobj,33,optionsga)
 %[mejor,fval,reason,output,poblacion] = ga(@fobj,33,optionsga);
 %Sistema difuso optimizado
-a = generafis(X);
-fuzzy(a)
+sistema = generafis(X);
+fuzzy(sistema)
 %[t,x,e] = sim('SistemaControlPR16');
 %ys = x(:,2);
 %plot(t,ys);
