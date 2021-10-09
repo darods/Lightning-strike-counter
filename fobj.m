@@ -1,12 +1,12 @@
 function error=fobj(P)
-%Funci�n para calcular el �ndice de desempe�o
+%Función para calcular el �ndice de desempe�o
 
 
 %Sistema difuso como variable global
 global sistema
 global imdsTrain imdsValidation imdsTest
 %Controlador difuso
-sistema = generafis(P);
+sistema = generafisConf3(P);
 
 %% Get statistical data from training data
 superStructure=getImagesInformation(imdsTrain);

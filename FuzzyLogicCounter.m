@@ -26,9 +26,9 @@ fracTestFiles = 0.05;
 %% Fuzzy logic definition
 warning('off')
 %Fuzzy logic system call
-%sistema=fuzzySystemStatic;
+sistema=fuzzySystemStaticConf3;
 %fuzzy(sistema)
-sistema = readfis('Lightning_strike_counter_GA_optimized_4.fis');
+%sistema = readfis('Lightning_strike_counter_GA_optimized_4.fis');
 
 %% Get statistical data from training data
 superStructure=getImagesInformation(imdsTrain);
