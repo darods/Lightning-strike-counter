@@ -33,7 +33,7 @@ sistema=addmf(sistema,'input',2,'media','gbellmf', [x(13) x(14) x(15)]);
 sistema=addmf(sistema,'input',2,'grande','gbellmf', [x(16) x(17) x(18)]);
 
 %Variable de entrada: excentricidad
-sistema=addvar(sistema,'input','excentricidad',  [0 1]);
+%sistema=addvar(sistema,'input','excentricidad',  [0 1]);
 
 %{
 % Configuración 1
@@ -42,25 +42,24 @@ sistema=addmf(sistema,'input',3,'si_excentrico','gaussmf', [0.177 0.9746]);
 %plotmf(sistema,'input',3)
 %}
 % Configuración 2
-sistema=addmf(sistema,'input',3,'no excentrico','gbellmf', [x(19) x(20) x(21)]);
-sistema=addmf(sistema,'input',3,'si excentrico','gbellmf', [x(22) x(23) x(24)]);
+%sistema=addmf(sistema,'input',3,'no excentrico','gbellmf', [x(19) x(20) x(21)]);
+%sistema=addmf(sistema,'input',3,'si excentrico','gbellmf', [x(22) x(23) x(24)]);
 
 
 %Variable de salida: Numero rayos
 sistema=addvar(sistema,'output','numero_rayos',[0 2.5]);
 
 %Funciones de pertenencia
-sistema=addmf(sistema,'output',1, '0 rayos','gbellmf', [x(25) x(26) x(27)]);
-sistema=addmf(sistema,'output',1, '1 rayo','gbellmf', [x(28) x(29) x(30)]);
-sistema=addmf(sistema,'output',1, '2 rayos','gbellmf', [x(31) x(32) x(33)]);
+sistema=addmf(sistema,'output',1, '0 rayos','gbellmf', [x(19) x(20) x(21)]);
+sistema=addmf(sistema,'output',1, '1 rayo','gbellmf', [x(22) x(23) x(24)]);
+sistema=addmf(sistema,'output',1, '2 rayos','gbellmf', [x(25) x(26) x(27)]);
 %plotmf(sistema,'output',1)
 
 %Reglas de inferencia
 ruleList=[
-    1 1 1 1 1 2 % 0 rayos
-    1 1 2 1 1 2 % 0 rayos
-    2 3 2 2 1 2 % 1 rayos
-    3 2 2 3 1 2]; % 2 rayos
+    1 1 1 1 2 % 0 rayos
+    2 3 2 1 2 % 1 rayos
+    3 2 3 1 2]; % 2 rayos
 
 sistema = addrule(sistema,ruleList);
 

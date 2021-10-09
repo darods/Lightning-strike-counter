@@ -45,14 +45,15 @@ sistema=addmf(sistema,'input',2,'grande','gbellmf', [x(16) x(17) x(18)]);
 %}
 
 % Input: eccentricity
-system=addvar(system,'input','excentricidad',  [0 1]);
+%system=addvar(system,'input','excentricidad',  [0 1]);
 
 
-% First setting
+%{ 
+First setting
 system=addmf(system,'input',3,'no excentrico','gbellmf', [0.55 3.28 0.334]);
 system=addmf(system,'input',3,'si excentrico','gbellmf', [0.164 4.1 1.008]);
 %plotmf(sistema,'input',3)
-
+%}
 
 %{
 % Configuración 2
@@ -71,10 +72,9 @@ system=addmf(system,'output',1,'2 rayos','gbellmf', [0.193 1 2.02]);
 
 % Inference rules
 ruleList=[
-    1 1 1 1 1 2 % 0 rayos
-    1 1 2 1 1 2 % 0 rayos
-    2 3 2 2 1 2 % 1 rayos
-    3 2 2 3 1 2]; % 2 rayos
+    1 1 1 1 2 % 0 rayos
+    2 3 2 1 2 % 1 rayos
+    3 2 3 1 2]; % 2 rayos
 
 system = addrule(system,ruleList);
 

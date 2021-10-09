@@ -28,7 +28,7 @@ warning('off')
 %Fuzzy logic system call
 %sistema=fuzzySystemStatic;
 %fuzzy(sistema)
-sistema = readfis('Lightning_strike_counter_GA_optimized_2.fis');
+sistema = readfis('Lightning_strike_counter_GA_optimized_4.fis');
 
 %% Get statistical data from training data
 superStructure=getImagesInformation(imdsTrain);
@@ -39,8 +39,7 @@ for j = 1:numel(superStructure)
     output_fis = zeros (superStructure(j).numObj, 2);
     for h=1:superStructure(j).numObj
         cuadro = [superStructure(j).numObj ... 
-                  superStructure(j).imgStats(h).Area ... 
-                  superStructure(j).imgStats(h).Eccentricity];
+                  superStructure(j).imgStats(h).Area];
         Y = evalfis(cuadro, sistema);
         output_fis(h) = Y;
     end

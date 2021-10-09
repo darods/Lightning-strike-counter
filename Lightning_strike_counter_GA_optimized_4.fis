@@ -1,0 +1,41 @@
+[System]
+Name='Lightning_strike_counter_GA_optimized_4'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=3
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='#Objetos'
+Range=[0 50]
+NumMFs=3
+MF1='entre 0 y 4':'gbellmf',[-0.0130892760823768 0.15467795967679 0.634494271817299]
+MF2='entre 4 y 12':'gbellmf',[0.422291365159737 1.92162332557773 1.01847303442087]
+MF3='mas de 12':'gbellmf',[1.98426156030213 0.491978792534042 0.0696073392651047]
+
+[Input2]
+Name='Area'
+Range=[0 1500]
+NumMFs=3
+MF1='pequena':'gbellmf',[0.0211533968782844 0.536306347232771 0.8344298794175]
+MF2='media':'gbellmf',[-0.284413675341259 0.289528595847165 0.376941862214732]
+MF3='grande':'gbellmf',[0.866123599757671 0.927564682060947 1.04110871271421]
+
+[Output1]
+Name='numero_rayos'
+Range=[0 2.5]
+NumMFs=3
+MF1='0 rayos':'gbellmf',[0.0911123316022759 0.326059024016507 -0.451856306464646]
+MF2='1 rayo':'gbellmf',[0.406148202046865 1.78427920323255 1.57967834832452]
+MF3='2 rayos':'gbellmf',[0.905140113904437 1.79205317563434 0.0516922298325599]
+
+[Rules]
+1 1, 1 (1) : 2
+2 3, 2 (1) : 2
+3 2, 3 (1) : 2

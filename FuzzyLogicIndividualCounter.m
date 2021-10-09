@@ -47,8 +47,7 @@ comparationMatrix = [];
 output_fis = zeros (exStruct.numObj, 2);
 for j = 1:exStruct.numObj
     cuadro = [exStruct.numObj ... 
-              exStruct.imgStats(j).Area ... 
-              exStruct.imgStats(j).Eccentricity];
+              exStruct.imgStats(j).Area];
           
     Y = evalfis(cuadro, sistema);
     output_fis(j) = Y;
