@@ -24,15 +24,15 @@ global imdsTrain imdsValidation imdsTest
 
 
 %% Optimización con algoritmos genéticos
-% optionsga = gaoptimset('Display','iter');
-optionsga = gaoptimset('PopulationSize',50,'Generations',10,'PopInitRange',...
+%optionsga = gaoptimset('Display','iter');
+optionsga = gaoptimset('PopulationSize',50,'Generations',20,'PopInitRange',...
     [-0.5;2],'EliteCount',2,'CrossoverFraction',0.8,'PopulationType','doubleVector','TimeLimit',2000,'Display','iter');
 
 %Opciones del algoritmo genético
-X = ga(@fobj,27,optionsga)
+X = ga(@fobj,33,optionsga)
 %[mejor,fval,reason,output,poblacion] = ga(@fobj,33,optionsga);
 %% Sistema difuso optimizado
-sistema = generafisConf3(X);
+sistema = generafisConf5(X);
 fuzzy(sistema)
 %[t,x,e] = sim('SistemaControlPR16');
 %ys = x(:,2);

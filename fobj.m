@@ -6,7 +6,7 @@ function error=fobj(P)
 global sistema
 global imdsTrain imdsValidation imdsTest
 %Controlador difuso
-sistema = generafisConf3(P);
+sistema = generafisConf5(P);
 
 %% Get statistical data from training data
 superStructure=getImagesInformation(imdsTrain);
@@ -17,7 +17,8 @@ for j = 1:numel(superStructure)
     output_fis = zeros (superStructure(j).numObj, 2);
     for h=1:superStructure(j).numObj
         cuadro = [superStructure(j).numObj ... 
-                  superStructure(j).imgStats(h).Area];
+                  superStructure(j).imgStats(h).Area ...
+                  superStructure(j).imgStats(h).Eccentricity];
         Y = evalfis(cuadro, sistema);
         output_fis(h) = Y;
     end

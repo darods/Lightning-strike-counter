@@ -26,9 +26,9 @@ fracTestFiles = 0.05;
 %% Fuzzy logic definition
 warning('off')
 %Fuzzy logic system call
-sistema=fuzzySystemStaticConf3;
+%sistema=fuzzySystemStaticConf3;
 %fuzzy(sistema)
-%sistema = readfis('Lightning_strike_counter_GA_optimized_4.fis');
+sistema = readfis('optimizacion6Conf3.fis');
 
 %% Get statistical data from training data
 superStructure=getImagesInformation(imdsTrain);
@@ -39,7 +39,8 @@ for j = 1:numel(superStructure)
     output_fis = zeros (superStructure(j).numObj, 2);
     for h=1:superStructure(j).numObj
         cuadro = [superStructure(j).numObj ... 
-                  superStructure(j).imgStats(h).Area];
+                  superStructure(j).imgStats(h).Area ...
+                  superStructure(j).imgStats(h).Eccentricity];
         Y = evalfis(cuadro, sistema);
         output_fis(h) = Y;
     end
@@ -57,5 +58,17 @@ total = numel(comparationMatrix(:,1));
 YPred = comparationMatrix(:,1);
 YTest = comparationMatrix(:,2);
 accuracy = sum(YPred == YTest)/total
-error = 1 - accuracy 
-mse = 1/total*sum((YPred-YTest).^2)
+
+
+figure
+t = [1:total];
+plot(t,comparationMatrix(:,1),t,comparationMatrix(:,2))
+legend('Reales', 'Simulados')
+title('Comparación')
+xlabel('# de imagen'); ylabel('Cantidad de rayos')
+
+figure
+plot(t, YPred - YTest)
+title('Error')
+xlabel('# de imagen'); ylabel('Error en cantidad de rayos')
+
