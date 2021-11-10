@@ -1,0 +1,41 @@
+[System]
+Name='optimizacion7Conf1'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=3
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='#Objetos'
+Range=[0 50]
+NumMFs=3
+MF1='entre 0 y 4':'gbellmf',[3.27168427700527 -0.154154334051031 2.05756341647629]
+MF2='entre 4 y 12':'gbellmf',[0.0200701360664732 2.38800902685355 -3.90184780093821]
+MF3='mas de 12':'gbellmf',[0.938542351083255 0.504138250815904 -1.98245668424031]
+
+[Input2]
+Name='Area'
+Range=[0 200]
+NumMFs=3
+MF1='pequena':'gbellmf',[-0.353382655972664 1.6452951819817 2.85979533565949]
+MF2='media':'gbellmf',[3.258238347025 -0.661722807361592 4.33304235341201]
+MF3='grande':'gbellmf',[-0.286187297136205 -1.34807195449183 -5.03097688321231]
+
+[Output1]
+Name='numero_rayos'
+Range=[0 2]
+NumMFs=3
+MF1='0 rayos':'gbellmf',[0.770696640843064 -0.432634920523684 -1.03687775748833]
+MF2='1 rayo':'gbellmf',[0.877288493095375 0.55849243428052 -0.0341330228486804]
+MF3='2 rayos':'gbellmf',[6.21985299563221 1.52243780784705 1.55648350904589]
+
+[Rules]
+1 1, 1 (1) : 2
+2 3, 2 (1) : 2
+3 2, 3 (1) : 2

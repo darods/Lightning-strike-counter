@@ -14,7 +14,7 @@ clear all
 clc
 
 %% Step 1: load image you want to transform
-imgDir = 'img/30.jpg'; % route to the image folder with image name
+imgDir = 'imgOriginal/30.jpg'; % route to the image folder with image name
 img2c = '30-2C.png'; % new image name
 I = imread(imgDir);
 %imshow(I);

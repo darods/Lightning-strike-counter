@@ -1,4 +1,4 @@
-function CdifusoPD = fuzzySystemStatic()
+function CdifusoPD = fuzzySystemStaticConf2()
 %{
 Fuzzy system definition
 Developed by:    
@@ -10,16 +10,16 @@ course: Cibernetica 3
 system=newfis('Lightning_strike_counter');
 
 % Input: # of objects
-system=addvar(system,'input','#Objetos',[0 50]);
-system=addmf(system,'input',1, 'entre 0 y 4','gbellmf', [3.05 3.16 0.571]);
-system=addmf(system,'input',1, 'entre 4 y 12','gbellmf', [4.91 3.84 9.833]);
-system=addmf(system,'input',1,'mas de 12','gbellmf', [19.3 2.5 36.9]);
+system=addvar(system,'input','#Objetos',[0 20]);
+system=addmf(system,'input',1, 'entre 0 y 4','gaussmf', [1.036 0.2284]);
+system=addmf(system,'input',1, 'entre 4 y 12','gaussmf', [1.668 3.933]);
+system=addmf(system,'input',1,'mas de 12','gaussmf', [6.557 14.76]);
 
 % Input: Area
-system=addvar(system,'input','Area', [0 1500]);
-system=addmf(system,'input',2,'pequena','gbellmf', [91.5 3.16 38.6]);
-system=addmf(system,'input',2,'media','gbellmf', [230 3.84 430]);
-system=addmf(system,'input',2,'grande','gbellmf', [362 2.5 1.2e+03]);
+system=addvar(system,'input','Area', [0 800]);
+system=addmf(system,'input',2,'pequena','gaussmf', [41.45 20.59]);
+system=addmf(system,'input',2,'media','gaussmf', [104.2 229.3]);
+system=addmf(system,'input',2,'grande','gaussmf', [164 640]);
 %plotmf(sistema,'input',2)
 
 % Input: eccentricity

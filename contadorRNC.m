@@ -6,7 +6,7 @@ close all
 clear all
 clc
 
-imgFolder = 'img';
+imgFolder = 'imgBinary';
 imds = imageDatastore(imgFolder,...
     'IncludeSubFolders', true, 'LabelSource', 'foldernames');
 

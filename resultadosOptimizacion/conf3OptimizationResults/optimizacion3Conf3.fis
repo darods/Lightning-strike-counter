@@ -1,0 +1,49 @@
+[System]
+Name='optimizacion3Conf3'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=4
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='#Objetos'
+Range=[0 50]
+NumMFs=3
+MF1='entre 0 y 4':'gbellmf',[1.60897178109792 0.818560547757102 0.991019848369223]
+MF2='entre 4 y 12':'gbellmf',[1.44315109976381 1.4151415276425 -1.42736311337679]
+MF3='mas de 12':'gbellmf',[0.759510159395103 -2.53131045679748 0.469430193908882]
+
+[Input2]
+Name='Area'
+Range=[0 1500]
+NumMFs=3
+MF1='pequena':'gbellmf',[-0.388725558656119 1.58341673828926 0.987751431466272]
+MF2='media':'gbellmf',[-0.227739043190891 -1.60476104797772 -1.24083688882208]
+MF3='grande':'gbellmf',[-0.354994364276911 1.50756028533801 0.347002534325173]
+
+[Input3]
+Name='excentricidad'
+Range=[0 1]
+NumMFs=2
+MF1='no excentrico':'gbellmf',[3.09143721539657 -0.413941889264875 1.19519220081449]
+MF2='si excentrico':'gbellmf',[0.744648524582461 1.15986584006398 1.82317981287508]
+
+[Output1]
+Name='numero_rayos'
+Range=[0 2.5]
+NumMFs=3
+MF1='0 rayos':'gbellmf',[-0.465175552007453 0.925165035355757 -0.321904242409619]
+MF2='1 rayo':'gbellmf',[1.69039613597865 3.79587055205505 1.91233733300434]
+MF3='2 rayos':'gbellmf',[-0.400761230420099 3.49430250436566 0.311566779159194]
+
+[Rules]
+1 1 1, 1 (1) : 2
+1 1 2, 1 (1) : 2
+2 3 2, 2 (1) : 2
+3 2 2, 3 (1) : 2

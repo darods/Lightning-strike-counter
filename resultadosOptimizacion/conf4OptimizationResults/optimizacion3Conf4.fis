@@ -1,0 +1,41 @@
+[System]
+Name='optimizacion3Conf4'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=3
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='#Objetos'
+Range=[0 15]
+NumMFs=3
+MF1='entre 0 y 4':'zmf',[-4.56727985284556 0.355154116526472]
+MF2='entre 4 y 12':'gauss2mf',[2.6945044729754 1.25153324344382 1.42114149138832 4.35418434066891]
+MF3='mas de 12':'gauss2mf',[-0.144046217589231 -0.160911955997055 0.484579012012869 0.949635450167789]
+
+[Input2]
+Name='Area'
+Range=[0 600]
+NumMFs=3
+MF1='pequena':'zmf',[-2.98019913824363 0.981011897003106]
+MF2='media':'gauss2mf',[0.668206904883351 -0.375432687760929 2.05477732659428 0.136974752142706]
+MF3='grande':'gauss2mf',[-2.61706588394511 3.83218947834732 2.48288906862446 -2.67530420744681]
+
+[Output1]
+Name='numero Rayos'
+Range=[0 2.5]
+NumMFs=3
+MF1='0 rayos':'zmf',[-0.187826971891899 6.08723133599588]
+MF2='1 rayo':'gauss2mf',[3.4913533037578 0.255193045971906 -0.199518816550646 0.557209144593443]
+MF3='2 rayos':'gauss2mf',[1.29127376449913 0.310723279263839 1.2909135269865 0.889836185899225]
+
+[Rules]
+1 1, 1 (1) : 2
+2 3, 2 (1) : 2
+3 2, 3 (1) : 2
