@@ -67,3 +67,6 @@ Finalmente se muestra un gráfico en el que se muestran las imágenes cuya etiqu
 
 ## Resultados
 Los resultados obtenidos por este sistema, así como una explicación teórica del funcionamiento del algoritmo se encuentra en el archivo `paper_final.pdf`.
+
+## Licencia
+MIT <3.
