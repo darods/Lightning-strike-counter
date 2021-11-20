@@ -29,10 +29,9 @@ optionsga = gaoptimset('PopulationSize',50,'Generations',20,'PopInitRange',...
     [-0.5;2],'EliteCount',2,'CrossoverFraction',0.8,'PopulationType','doubleVector','TimeLimit',2000,'Display','iter');
 
 %Opciones del algoritmo genético
-X = ga(@fobj,33,optionsga)
-%[mejor,fval,reason,output,poblacion] = ga(@fobj,33,optionsga);
+X = ga(@fobj,30,optionsga) % Cambie el numero por el la cantidad de entradas de cada configuracion
 %% Sistema difuso optimizado
-sistema = generafisConf5(X); % Cambiar esta linea por el nombre alguna de las configuraciones
+sistema = generafisConf4(X); % Cambiar esta linea por el nombre alguna de las configuraciones
 fuzzy(sistema)
 %[t,x,e] = sim('SistemaControlPR16');
 %ys = x(:,2);

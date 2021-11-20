@@ -12,19 +12,6 @@ system=addvar(system,'input','Area', [0 600]);
 system=addmf(system,'input',2,'pequena','zmf', [x(11) x(12)]);
 system=addmf(system,'input',2,'media','gauss2mf', [x(13) x(14) x(15) x(16)]);
 system=addmf(system,'input',2,'grande','gauss2mf', [x(17) x(18) x(19) x(20)]);
-%plotmf(sistema,'input',2)
-
-% Input: eccentricity
-%system=addvar(system,'input','excentricidad',  [0 1]);
-
-
-%{ 
-First setting
-system=addmf(system,'input',3,'no excentrico','gbellmf', [0.55 3.28 0.334]);
-system=addmf(system,'input',3,'si excentrico','gbellmf', [0.164 4.1 1.008]);
-%plotmf(sistema,'input',3)
-%}
-
 
 % Output: # of lightning rays
 system=addvar(system,'output','numero Rayos',[0 2.5]);

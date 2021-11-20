@@ -1,23 +1,25 @@
 function CdifusoPD = generafisConf2(x)
-system=newfis('Lightning Strike Counter conf2');
 
-% Input: # of objects
-system=addvar(system,'input','#Objetos',[0 20]);
-system=addmf(system,'input',1, 'entre 0 y 4','gaussmf', [x(1) x(2)]);
-system=addmf(system,'input',1, 'entre 4 y 12','gaussmf', [x(3) x(4)]);
-system=addmf(system,'input',1,'mas de 12','gaussmf', [x(5) x(6)]);
+sistema=newfis('Lightning_strike_counter');
 
-% Input: Area
-system=addvar(system,'input','Area', [0 800]);
-system=addmf(system,'input',2,'pequena','gaussmf', [x(7) x(8)]);
-system=addmf(system,'input',2,'media','gaussmf', [x(9) x(10)]);
-system=addmf(system,'input',2,'grande','gaussmf', [x(11) x(12)]);
-%plotmf(sistema,'input',2)
+%Variable de entrada: Número de objetos
+sistema=addvar(sistema,'input','#Objetos',[0 50]);
+sistema=addmf(sistema,'input',1, 'entre 0 y 4','gbellmf', [x(1) x(2) x(3)]);
+sistema=addmf(sistema,'input',1, 'entre 4 y 12','gbellmf',[x(4) x(5) x(6)]);
+sistema=addmf(sistema,'input',1, 'mas de 12','gbellmf',[x(7) x(8) x(9)]);
+
+
+%Variable de entrada: Area
+sistema=addvar(sistema,'input','Area', [0 200]);
+sistema=addmf(sistema,'input',2,'pequena','gbellmf', [x(10) x(11) x(12)]);
+sistema=addmf(sistema,'input',2,'media','gbellmf', [x(13) x(14) x(15)]);
+sistema=addmf(sistema,'input',2,'grande','gbellmf', [x(16) x(17) x(18)]);
+
 %Variable de salida: Numero rayos
-system=addvar(system,'output','numero_rayos',[0 2.5]);
-system=addmf(system,'output',1, '0 rayos','gbellmf', [x(13) x(14) x(15)]);
-system=addmf(system,'output',1, '1 rayo','gbellmf', [x(16) x(17) x(18)]);
-system=addmf(system,'output',1, '2 rayos','gbellmf', [x(19) x(20) x(21)]);
+sistema=addvar(sistema,'output','numero_rayos',[0 2]);
+sistema=addmf(sistema,'output',1, '0 rayos','gbellmf', [x(19) x(20) x(21)]);
+sistema=addmf(sistema,'output',1, '1 rayo','gbellmf', [x(22) x(23) x(24)]);
+sistema=addmf(sistema,'output',1, '2 rayos','gbellmf', [x(25) x(26) x(27)]);
 %plotmf(sistema,'output',1)
 
 %Reglas de inferencia
@@ -26,9 +28,11 @@ ruleList=[
     2 3 2 1 2 % 1 rayos
     3 2 3 1 2]; % 2 rayos
 
-system = addrule(system,ruleList);
+sistema = addrule(sistema,ruleList);
 
-% Input: eccentricity
-%system=addvar(system,'input','excentricidad',  [0 1]);
-CdifusoPD=system;
+
+%fuzzy(sistema)
+%Actualizando la salida de la funcion 
+CdifusoPD=sistema;
+
 end
