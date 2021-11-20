@@ -1,11 +1,12 @@
 function error=fobj(P)
-%Función para calcular el �ndice de desempe�o
+%Función para calcular el indice de desempenio
 
 
 %Sistema difuso como variable global
 global sistema
 global imdsTrain imdsValidation imdsTest
 %Controlador difuso
+% Cambiar esta linea por el nombre alguna de las configuraciones
 sistema = generafisConf5(P);
 
 %% Get statistical data from training data

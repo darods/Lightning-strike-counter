@@ -1,16 +1,17 @@
-% NN Contador de rayos
-% Daniel Alejandro Rodriguez Suarez
+% Convolutional Neural Network Counter
+% Authors: 
+% Daniel Rodriguez
 % Sebastian Salazar
-% https://youtu.be/lK9YyX-q32k
+% Reference: https://youtu.be/lK9YyX-q32k
 close all
 clear all
 clc
-
-imgFolder = 'imgBinary';
+%% Get images from folder
+imgFolder = '/imgBinary';
 imds = imageDatastore(imgFolder,...
     'IncludeSubFolders', true, 'LabelSource', 'foldernames');
 
-% separa en 60% entrenamiento, 20% validación y 20% pruebas
+%% Split data in 60% training, 20% validation and 20% test
 fracTrainFiles = 0.6;
 fracValFiles = 0.2;
 fracTestFiles = 0.2;
@@ -48,15 +49,12 @@ options = trainingOptions('sgdm', ...
 
 net = trainNetwork(imdsTrain,layers,options);
 
-%%
-
+%% Get accuracy
 YPred = classify(net,imdsTest);
 YTest = imdsTest.Labels;
-
 accuracy = sum(YPred == YTest)/numel(YTest)
 
-
-%%
+%% Show images data couldn't get predicted
 ind = find(YPred ~= YTest);
 figure; 
 for ii = 1:length(ind)

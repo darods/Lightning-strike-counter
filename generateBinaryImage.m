@@ -1,4 +1,5 @@
 %{ 
+THIS CODE SHOULD BE RUN FIRST.
 This code returns a binary image with filled holes of a 150x150
 Lightning ray color image.
 This code is an adaptation from this matlab tutorial:

@@ -32,7 +32,7 @@ optionsga = gaoptimset('PopulationSize',50,'Generations',20,'PopInitRange',...
 X = ga(@fobj,33,optionsga)
 %[mejor,fval,reason,output,poblacion] = ga(@fobj,33,optionsga);
 %% Sistema difuso optimizado
-sistema = generafisConf5(X);
+sistema = generafisConf5(X); % Cambiar esta linea por el nombre alguna de las configuraciones
 fuzzy(sistema)
 %[t,x,e] = sim('SistemaControlPR16');
 %ys = x(:,2);
